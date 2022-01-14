@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="desing.css">
+    <title>Document</title>
+</head>
+<style media="screen">
+    /* #direccion:focus{
+        color: green;
+    } */
+</style>
+<body>
+    <h1>En esta pagina podrá enviar mensajes a contactos de Whatsapp sin tener el contacto agregado</h1>
+    <div class="formulario">
+        <div class="primero" onclick="limpiar()">
+            <label for="direccion">ingrese el número:</label>
+            <input id="direccion"
+            type="number"
+            required
+            name="numero"
+            placeholder="número whatsapp"
+            oninput="limpiar()"
+            value="" >
+        </div>
+        <div class="segundo">
+            <!-- <p id="advertencia">agregue un numero de whatsapp.</p> -->
+            <p id="advertencia"></p>
+        </div>
+        <div class="boton">
+            <input type="submit" onclick="redireccionar()"
+            name=""
+            value="Enviar mensage">
+        </div>
+    </div>
+    <h2 id="resultado"></h2>
+    <script type="text/javascript">
+        function redireccionar()
+        {
+            let number = document.getElementById('direccion').value;
+            // url = "http://wa.me/591"+number;
+            if (number >=9999999) {
+                window.location = "https://api.whatsapp.com/send?phone=591"+number
+            } else {
+                document.getElementById('advertencia').innerHTML="agregue un número de whatsapp.";
+                document.getElementById('direccion').focus();
+            }
+            // window.location = "https://wa.me/591"+number
+            // document.getElementById('resultado').innerHTML = variable;
+        }
+        // ===============================================================
+        let tiempo = document.getElementById('direccion');
+        let timeout;
+        tiempo.addEventListener('keydown',() =>{
+            clearTimeout(timeout)
+            timeout = setTimeout(function () {
+                console.log("Has dejado de escribir");
+                if (parseInt(tiempo.value) <= 9999999) {
+                    console.log("El numero debe ser mayor de 8 digitos",tiempo.value);
+                    document.getElementById('advertencia').innerHTML="el número debe contener 8 dígitos";
+                } else {
+                    // Pintar el destello de verde del input
+
+                }
+                clearTimeout(timeout)
+            }, 1000);
+        })
+        // ===============================================================
+        function limpiar()
+        {
+            document.getElementById('advertencia').innerHTML=" ";
+        }
+    </script>
+</body>
+</html>
